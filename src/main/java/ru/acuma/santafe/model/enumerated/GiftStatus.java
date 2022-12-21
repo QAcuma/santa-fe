@@ -5,10 +5,10 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum GroupCommands {
+public enum GiftStatus {
 
-    REGISTER("register");
-
-    private final String command;
+    WISHED,
+    ASSIGNED,
+    RECEIVED;
 
 }

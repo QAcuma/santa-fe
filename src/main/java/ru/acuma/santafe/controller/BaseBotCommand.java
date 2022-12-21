@@ -15,20 +15,19 @@ public abstract class BaseBotCommand extends BotCommand {
 
     private SantaService santaService;
 
+    public BaseBotCommand(String commandIdentifier, String description) {
+        super(commandIdentifier, description);
+    }
+
     @Autowired
     public void setSantaService(@Lazy SantaService santaService) {
         this.santaService = santaService;
     }
 
-    public BaseBotCommand(String commandIdentifier, String description) {
-        super(commandIdentifier, description);
-    }
-
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-        if (!santaService.existById(message.getFrom().getId())) {
-            santaService.checkInSanta(message.getFrom());
-        }
+        santaService.checkInSanta(message.getFrom());
+
         execute(message);
     }
 

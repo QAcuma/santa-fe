@@ -5,10 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum PrivateCommands {
+public enum GroupCommand {
 
-    START("start"),
-    WISH("wish");
+    REGISTER("register");
 
     private final String command;
 

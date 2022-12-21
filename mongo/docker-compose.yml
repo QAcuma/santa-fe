@@ -8,6 +8,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: test
       MONGO_INITDB_ROOT_PASSWORD: root
-      MONGO_INITDB_DATABASE: mongodb
+      MONGO_INITDB_DATABASE: santafe
     ports:
       - 27017:27017

@@ -13,7 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.acuma.santafe.controller.BaseBotCommand;
-import ru.acuma.santafe.service.impl.SantaService;
 import ru.acuma.santafe.service.impl.UpdateService;
 
 import java.io.Serializable;
@@ -23,14 +22,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SantaFeBot extends TelegramLongPollingCommandBot {
 
+    private final List<BaseBotCommand> commands;
+    private final @Lazy
+    UpdateService updateService;
     @Value("${telegram.bot.name}")
     public String username;
-
     @Value("${telegram.bot.token}")
     public String token;
-
-    private final List<BaseBotCommand> commands;
-    private final @Lazy UpdateService updateService;
 
     @PostConstruct
     private void init() {
@@ -56,7 +54,6 @@ public class SantaFeBot extends TelegramLongPollingCommandBot {
     public final <T extends Serializable, M extends BotApiMethod<T>> T executeApiMethod(M method) throws TelegramApiException {
         return super.execute(method);
     }
-
 
     @SneakyThrows
     public void connect() {

@@ -19,9 +19,7 @@ public class VideoNoteService implements IVideoNoteService {
     public void applyNote(Update update) {
         var from = getFrom(update);
         var video = update.getMessage().getVideoNote();
-        if (!santaService.existById(from.getId())) {
-            santaService.checkInSanta(from);
-        }
+        santaService.checkInSanta(from);
 
         giftService.accept(
                 video,

@@ -14,6 +14,11 @@ public class MessageService implements IMessageService {
     }
 
     @Override
+    public String wishAlreadyExists(String userName) {
+        return "Санте уже известно об этом пожелании пользователя %s".formatted(userName);
+    }
+
+    @Override
     public String remindWishMessage(String userName) {
         return "Пожелания %s на %s год".formatted(userName, LocalDateTime.now().getYear());
     }

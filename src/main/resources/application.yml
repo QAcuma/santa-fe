@@ -1,3 +1,5 @@
+logging.level:
+  root: ${SANTAFE_LOGGING_LEVEL:info}
 telegram:
   bot:
     name: ${SANTAFE_BOT_NAME}
@@ -13,3 +15,4 @@ spring:
       database: ${SANTAFE_MONGO_DATABASE:santafe}
   main:
     allow-circular-references: true
+    web-application-type: none

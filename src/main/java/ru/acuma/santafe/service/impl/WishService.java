@@ -7,8 +7,8 @@ import org.telegram.telegrambots.meta.api.methods.ForwardMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.VideoNote;
-import ru.acuma.santafe.model.record.Santa;
-import ru.acuma.santafe.model.record.Wish;
+import ru.acuma.santafe.model.domain.Wish;
+import ru.acuma.santafe.model.enumerated.GiftStatus;
 import ru.acuma.santafe.repository.WishRepository;
 import ru.acuma.santafe.service.api.IExecuteService;
 import ru.acuma.santafe.service.api.IGiftService;
@@ -29,29 +29,36 @@ public class WishService implements IGiftService {
 
     @Override
     public void accept(VideoNote video, User from, String chatId, Integer messageId) {
-        var wish = new Wish(
-                ObjectId.get(),
-                from.getId(),
-                chatId,
-                messageId,
-                video,
-                LocalDateTime.now().getYear()
-        );
+        var wish = Wish.builder()
+                .id(ObjectId.get())
+                .telegramIdFrom(from.getId())
+                .telegramChatFrom(chatId)
+                .telegramMessageId(messageId)
+                .video(video)
+                .year(LocalDateTime.now().getYear())
+                .status(GiftStatus.WISHED)
+                .build();
 
-        if (findYearWishes(from.getId()).isEmpty()) {
+        var existedWishes = findYearWishes(from.getId());
+        var text = messageService.acceptedWishMessage(from.getFirstName());
+
+        if (!existedWishes.contains(wish)) {
             wishRepository.save(wish);
+        } else {
+            text = messageService.wishAlreadyExists(from.getFirstName());
         }
 
-        var text = messageService.acceptedWishMessage(from.getFirstName());
         var message = new SendMessage(chatId, text);
 
         executeService.execute(message);
     }
 
+    @Override
     public void remindUserWishes(Long telegramId, Long chatId) {
         var wishes = findYearWishes(telegramId);
         var stringChatId = String.valueOf(chatId);
         var santa = santaService.findByTelegramId(telegramId);
+
         if (santa == null) {
             return;
         }
@@ -72,17 +79,27 @@ public class WishService implements IGiftService {
     private void remind(Wish wish, String chatId) {
         var video = new ForwardMessage(
                 chatId,
-                wish.telegramChatFrom(),
-                wish.telegramMessageId());
+                wish.getTelegramChatFrom(),
+                wish.getTelegramMessageId());
 
         executeService.executeApi(video);
-
     }
 
     private List<Wish> findYearWishes(Long telegramId) {
         var year = LocalDateTime.now().getYear();
 
-        return wishRepository.findAllByTelegramIdFromAndYearEquals(telegramId, year);
+        return wishRepository.findAllByTelegramIdFromAndYearEqualsAndStatusIn(
+                telegramId,
+                year,
+                List.of(GiftStatus.WISHED, GiftStatus.ASSIGNED)
+        );
     }
 
+    @Override
+    public List<Long> findWishHolders() {
+        return wishRepository.findAll().stream()
+                .map(Wish::getTelegramIdFrom)
+                .distinct()
+                .toList();
+    }
 }
