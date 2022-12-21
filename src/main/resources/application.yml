@@ -1,0 +1,15 @@
+telegram:
+  bot:
+    name: ${SANTAFE_BOT_NAME}
+    token: ${SANTAFE_BOT_TOKEN}
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      host: ${SANTAFE_MONGO_HOST:localhost}
+      port: ${SANTAFE_MONGO_PORT:27017}
+      username: ${SANTAFE_MONGO_USER:test}
+      password: ${SANTAFE_MONGO_PASSWORD:root}
+      database: ${SANTAFE_MONGO_DATABASE:santafe}
+  main:
+    allow-circular-references: true
