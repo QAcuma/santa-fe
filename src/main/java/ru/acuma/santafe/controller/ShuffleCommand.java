@@ -35,4 +35,9 @@ public class ShuffleCommand extends BaseBotCommand {
         }
     }
 
+    @Override
+    protected Boolean denyInGroups() {
+        return Boolean.TRUE;
+    }
+
 }

@@ -37,4 +37,9 @@ public class ChosenCommand extends BaseBotCommand {
         santaService.save(victim);
     }
 
+    @Override
+    protected Boolean denyInGroups() {
+        return Boolean.TRUE;
+    }
+
 }

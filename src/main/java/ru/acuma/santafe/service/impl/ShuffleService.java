@@ -37,7 +37,7 @@ public class ShuffleService implements IShuffleService {
         current.setVictimTelegramId(first.getTelegramId());
         santaService.saveAll(santas);
 
-        santas.forEach(santa -> log.debug("login: {}, {} -> {}", santa.getLogin(), santa.getTelegramId(), santa.getVictimTelegramId()));
+        santas.forEach(santa -> log.info("login: {}, {} -> {}", santa.getLogin(), santa.getTelegramId(), santa.getVictimTelegramId()));
     }
 
 }

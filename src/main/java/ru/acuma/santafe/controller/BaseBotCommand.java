@@ -27,6 +27,9 @@ public abstract class BaseBotCommand extends BotCommand {
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
         santaService.checkInSanta(message.getFrom());
+        if (denyInGroups() && message.isGroupMessage()) {
+            return;
+        }
 
         execute(message);
     }
@@ -37,5 +40,7 @@ public abstract class BaseBotCommand extends BotCommand {
     }
 
     public abstract void execute(Message message);
+
+    protected abstract Boolean denyInGroups();
 
 }

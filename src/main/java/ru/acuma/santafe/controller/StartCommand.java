@@ -18,4 +18,9 @@ public class StartCommand extends BaseBotCommand {
         log.info(message.toString());
     }
 
+    @Override
+    protected Boolean denyInGroups() {
+        return Boolean.FALSE;
+    }
+
 }

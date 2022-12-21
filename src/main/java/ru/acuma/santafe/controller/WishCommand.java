@@ -28,4 +28,9 @@ public class WishCommand extends BaseBotCommand {
         wishService.remindUserWishes(message.getFrom().getId(), message.getChatId());
     }
 
+    @Override
+    protected Boolean denyInGroups() {
+        return Boolean.TRUE;
+    }
+
 }
