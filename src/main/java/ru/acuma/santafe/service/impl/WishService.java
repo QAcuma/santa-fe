@@ -52,8 +52,11 @@ public class WishService implements IGiftService {
         var wishes = findYearWishes(telegramId);
         var stringChatId = String.valueOf(chatId);
         var santa = santaService.findByTelegramId(telegramId);
+        if (santa == null) {
+            return;
+        }
 
-        if (!wishes.isEmpty() && santa != null) {
+        if (!wishes.isEmpty()) {
             var text = messageService.remindWishMessage(santa.toString());
             var message = new SendMessage(stringChatId, text);
             executeService.execute(message);
@@ -63,10 +66,10 @@ public class WishService implements IGiftService {
             executeService.execute(message);
         }
 
-        wishes.forEach(wish -> remind(wish, santa, String.valueOf(chatId)));
+        wishes.forEach(wish -> remind(wish, String.valueOf(chatId)));
     }
 
-    private void remind(Wish wish, Santa santa, String chatId) {
+    private void remind(Wish wish, String chatId) {
         var video = new ForwardMessage(
                 chatId,
                 wish.telegramChatFrom(),
