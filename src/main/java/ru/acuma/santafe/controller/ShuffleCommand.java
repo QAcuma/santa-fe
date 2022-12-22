@@ -42,7 +42,12 @@ public class ShuffleCommand extends BaseBotCommand {
         shuffleService.shuffle(String.valueOf(message.getChatId()));
         var response = new SendMessage(
                 String.valueOf(message.getChatId()),
-                "Санты назначены");
+                """
+                     🎅 Санты назначены! 🎅
+                     Скорее перейди по ссылке и узнай своего счастливчика
+                     
+                     @santa_fetch_bot
+                     """);
         executeService.execute(response);
     }
 
