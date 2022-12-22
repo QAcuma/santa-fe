@@ -13,7 +13,7 @@ public class ChosenService implements IChosenService {
     private final SantaRepository santaRepository;
 
     @Override
-    public Santa lookup(Long id, Long chatId) {
+    public Santa findVictim(Long id, Long chatId) {
         var user = santaRepository.findByTelegramId(id);
 
         return santaRepository.findByTelegramId(user.getVictimTelegramId());

@@ -18,7 +18,7 @@ public class ShuffleService implements IShuffleService {
     private final ISantaService santaService;
 
     @Override
-    public void shuffle() {
+    public void shuffle(String chatId) {
         var santaIds = wishService.findWishHolders();
         var santas = santaService.findAllActiveSantas(santaIds);
 
@@ -27,6 +27,7 @@ public class ShuffleService implements IShuffleService {
         }
 
         Collections.shuffle(santas);
+        log.info("Santas assigned in chat {}", chatId);
 
         var iterator = santas.iterator();
         var first = iterator.next();

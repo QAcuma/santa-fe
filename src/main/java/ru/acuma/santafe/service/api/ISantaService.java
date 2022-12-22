@@ -16,4 +16,6 @@ public interface ISantaService {
     void saveAll(List<Santa> santas);
 
     void save(Santa santa);
+
+    void flushSantas();
 }

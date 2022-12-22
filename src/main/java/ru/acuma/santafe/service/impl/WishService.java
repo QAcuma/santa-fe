@@ -7,12 +7,12 @@ import org.telegram.telegrambots.meta.api.methods.ForwardMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.VideoNote;
+import ru.acuma.santafe.model.domain.Santa;
 import ru.acuma.santafe.model.domain.Wish;
 import ru.acuma.santafe.model.enumerated.GiftStatus;
 import ru.acuma.santafe.repository.WishRepository;
 import ru.acuma.santafe.service.api.IExecuteService;
 import ru.acuma.santafe.service.api.IMessageService;
-import ru.acuma.santafe.service.api.ISantaService;
 import ru.acuma.santafe.service.api.IWishService;
 
 import java.time.LocalDateTime;
@@ -25,7 +25,6 @@ public class WishService implements IWishService {
     private final WishRepository wishRepository;
     private final IMessageService messageService;
     private final IExecuteService executeService;
-    private final ISantaService santaService;
 
     @Override
     public void accept(VideoNote video, User from, String chatId, Integer messageId) {
@@ -54,22 +53,9 @@ public class WishService implements IWishService {
     }
 
     @Override
-    public void remindUserWishes(Long telegramId, Long chatId) {
-        var wishes = findYearWishes(telegramId);
+    public void sendWish(Santa santa, Long chatId) {
+        var wishes = findYearWishes(santa.getTelegramId());
         var stringChatId = String.valueOf(chatId);
-        var santa = santaService.findByTelegramId(telegramId);
-
-        if (santa == null) {
-            var text = """
-                    Ты ещё не записал своё желание :(
-                                        
-                    Поспеши оставить кружок с хотелкой в чате сант!
-                    """;
-            var response = new SendMessage(String.valueOf(chatId), text);
-            executeService.execute(response);
-
-            return;
-        }
 
         if (!wishes.isEmpty()) {
             var text = messageService.remindWishMessage(santa.toString());
@@ -106,8 +92,16 @@ public class WishService implements IWishService {
     @Override
     public List<Long> findWishHolders() {
         return wishRepository.findAll().stream()
+                .filter(wish -> wish.getStatus() != GiftStatus.RECEIVED)
                 .map(Wish::getTelegramIdFrom)
                 .distinct()
                 .toList();
+    }
+
+    @Override
+    public void flushWishes() {
+        var wishes = wishRepository.findAll();
+        wishes.forEach(wish -> wish.setStatus(GiftStatus.RECEIVED));
+        wishRepository.saveAll(wishes);
     }
 }

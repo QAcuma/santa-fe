@@ -30,7 +30,7 @@ public class ChosenCommand extends BaseBotCommand {
 
     @Override
     public void execute(Message message) {
-        var victim = chosenService.lookup(message.getFrom().getId(), message.getChatId());
+        var victim = chosenService.findVictim(message.getFrom().getId(), message.getChatId());
         if (victim == null) {
             var text = "Время узнать счастливчика ещё не пришло!";
             var response = new SendMessage(String.valueOf(message.getChatId()), text);
@@ -38,7 +38,7 @@ public class ChosenCommand extends BaseBotCommand {
 
             return;
         }
-        wishService.remindUserWishes(victim.getVictimTelegramId(), message.getChatId());
+        wishService.sendWish(victim, message.getChatId());
         var santa = santaService.findByTelegramId(message.getFrom().getId());
         santa.setKnowVictim(Boolean.TRUE);
         santaService.save(santa);

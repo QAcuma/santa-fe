@@ -1,5 +1,5 @@
 package ru.acuma.santafe.service.api;
 
 public interface IShuffleService {
-    void shuffle();
+    void shuffle(String chatId);
 }

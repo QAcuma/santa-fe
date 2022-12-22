@@ -21,6 +21,8 @@ public class Santa {
 
     @Override
     public String toString() {
+        var firstName = this.firstName == null ? "" : this.firstName;
+        var lastName = this.lastName == null ? "" : this.lastName;
         var fullName = firstName + " " + lastName;
 
         return fullName.isBlank()

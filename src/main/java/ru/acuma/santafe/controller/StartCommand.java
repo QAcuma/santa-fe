@@ -30,11 +30,13 @@ public class StartCommand extends BaseBotCommand {
 
     @Override
     public void execute(Message message) {
-        var victim = chosenService.lookup(message.getFrom().getId(), message.getChatId());
+        var victim = chosenService.findVictim(message.getFrom().getId(), message.getChatId());
         var victimName = victim == null
                 ? ""
                 : victim.toString();
-        var text = messageService.startPrivateChatMessage(victimName);
+        var text = victim == null
+                ? "Пока жребий не брошен, но потом я скажу тебе для кого ты станешь сантой"
+                : messageService.startPrivateChatMessage(victimName);
         var keyboard = keyboardService.startPrivateKeyboard();
         var response = new SendMessage(String.valueOf(message.getChatId()), text);
         response.setReplyMarkup(keyboard);

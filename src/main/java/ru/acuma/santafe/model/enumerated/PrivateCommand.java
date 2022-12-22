@@ -9,6 +9,7 @@ public enum PrivateCommand {
 
     START("start"),
     SHUFFLE("shuffle"),
+    FLUSH("flush"),
     CHOSEN("chosen"),
     MEMBERS("members"),
     REMIND("remind");

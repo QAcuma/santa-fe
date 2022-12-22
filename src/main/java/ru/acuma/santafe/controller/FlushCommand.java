@@ -8,29 +8,31 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.acuma.santafe.model.enumerated.PrivateCommand;
 import ru.acuma.santafe.service.api.IExecuteService;
-import ru.acuma.santafe.service.api.IShuffleService;
+import ru.acuma.santafe.service.api.ISantaService;
+import ru.acuma.santafe.service.api.IWishService;
 
 import java.util.List;
 
 @Slf4j
 @Component
-public class ShuffleCommand extends BaseBotCommand {
+public class FlushCommand extends BaseBotCommand {
 
     private final static List<Long> authorizedMembers = List.of(358831551L, 285250417L);
 
-    private final IShuffleService shuffleService;
     private final IExecuteService executeService;
+    private final IWishService wishService;
+    private final ISantaService santaService;
 
-    public ShuffleCommand(@Lazy IShuffleService shuffleService, @Lazy IExecuteService executeService) {
-        super(PrivateCommand.SHUFFLE.getCommand(), "Shuffle members");
-        this.shuffleService = shuffleService;
+    public FlushCommand(@Lazy IExecuteService executeService, @Lazy IWishService wishService, @Lazy ISantaService santaService) {
+        super(PrivateCommand.FLUSH.getCommand(), "FlushChatMessages");
         this.executeService = executeService;
+        this.wishService = wishService;
+        this.santaService = santaService;
     }
 
     @Override
     public void execute(Message message) {
-        var userId = message.getFrom().getId();
-        if (!authorizedMembers.contains(userId)) {
+        if (!authorizedMembers.contains(message.getFrom().getId())) {
             var delete = new DeleteMessage(
                     String.valueOf(message.getChatId()),
                     message.getMessageId());
@@ -39,16 +41,17 @@ public class ShuffleCommand extends BaseBotCommand {
             return;
         }
 
-        shuffleService.shuffle(String.valueOf(message.getChatId()));
+        wishService.flushWishes();
+        santaService.flushSantas();
         var response = new SendMessage(
                 String.valueOf(message.getChatId()),
-                "Санты назначены");
+                "Никто не забыт. Кроме всех сант и их желаний :с");
         executeService.execute(response);
     }
 
     @Override
     protected Boolean denyInGroups() {
-        return Boolean.FALSE;
+        return Boolean.TRUE;
     }
 
 }

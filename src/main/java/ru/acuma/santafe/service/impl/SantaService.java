@@ -51,4 +51,14 @@ public class SantaService implements ISantaService {
         santaRepository.save(santa);
     }
 
+    @Override
+    public void flushSantas() {
+        var santas = santaRepository.findAll();
+        santas.forEach(santa -> {
+            santa.setKnowVictim(Boolean.FALSE);
+            santa.setVictimTelegramId(null);
+        });
+        santaRepository.saveAll(santas);
+    }
+
 }
