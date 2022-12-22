@@ -3,7 +3,9 @@ package ru.acuma.santafe.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.acuma.santafe.service.api.ISantaService;
 import ru.acuma.santafe.service.api.IShuffleService;
+import ru.acuma.santafe.service.api.IWishService;
 
 import java.util.Collections;
 
@@ -12,8 +14,8 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class ShuffleService implements IShuffleService {
 
-    private final WishService wishService;
-    private final SantaService santaService;
+    private final IWishService wishService;
+    private final ISantaService santaService;
 
     @Override
     public void shuffle() {

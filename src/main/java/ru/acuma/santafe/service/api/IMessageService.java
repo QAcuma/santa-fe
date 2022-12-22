@@ -8,4 +8,6 @@ public interface IMessageService {
     String remindWishMessage(String userName);
 
     String missingWishMessage(String valueOf);
+
+    String startPrivateChatMessage(String userName);
 }

@@ -28,4 +28,15 @@ public class MessageService implements IMessageService {
         return "Пока что у меня нет пожеланий пользователя %s ".formatted(userName);
     }
 
+    @Override
+    public String startPrivateChatMessage(String userName) {
+        return """
+                Тссс! Жребий брошен, ты будешь тайным сантой для %s. Посмотри его видосик, улыбнись и купи подарок. Не трать больше 1500₽.
+                                
+                Подарок нужно упаковать и крупно написать на нем для кого он. Потом принести в офис и положить в большой красный мешок рядом с Алиной. Торжественное вручение — в конце года.\s
+                                
+                Веселье начинается!
+                """.formatted(userName);
+    }
+
 }

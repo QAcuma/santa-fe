@@ -11,16 +11,16 @@ import ru.acuma.santafe.model.domain.Wish;
 import ru.acuma.santafe.model.enumerated.GiftStatus;
 import ru.acuma.santafe.repository.WishRepository;
 import ru.acuma.santafe.service.api.IExecuteService;
-import ru.acuma.santafe.service.api.IGiftService;
 import ru.acuma.santafe.service.api.IMessageService;
 import ru.acuma.santafe.service.api.ISantaService;
+import ru.acuma.santafe.service.api.IWishService;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class WishService implements IGiftService {
+public class WishService implements IWishService {
 
     private final WishRepository wishRepository;
     private final IMessageService messageService;
@@ -60,6 +60,14 @@ public class WishService implements IGiftService {
         var santa = santaService.findByTelegramId(telegramId);
 
         if (santa == null) {
+            var text = """
+                    Ты ещё не записал своё желание :(
+                                        
+                    Поспеши оставить кружок с хотелкой в чате сант!
+                    """;
+            var response = new SendMessage(String.valueOf(chatId), text);
+            executeService.execute(response);
+
             return;
         }
 

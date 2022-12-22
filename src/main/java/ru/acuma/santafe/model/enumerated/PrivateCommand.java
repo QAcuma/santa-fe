@@ -10,7 +10,8 @@ public enum PrivateCommand {
     START("start"),
     SHUFFLE("shuffle"),
     CHOSEN("chosen"),
-    WISH("wish");
+    MEMBERS("members"),
+    REMIND("remind");
 
     private final String command;
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
@@ -48,7 +49,25 @@ public class SantaFeBot extends TelegramLongPollingCommandBot {
 
     @Override
     public void processNonCommandUpdate(Update update) {
+        if (update.hasCallbackQuery()) {
+            processCallback(update.getCallbackQuery());
+        }
+
         updateService.handle(update);
+    }
+
+
+    private void processCallback(CallbackQuery callbackQuery) {
+        callbackQuery.getMessage().setFrom(callbackQuery.getFrom());
+        if (filter(callbackQuery.getMessage())) {
+            return;
+        }
+
+        getRegisteredCommand(callbackQuery.getData()).processMessage(
+                this,
+                callbackQuery.getMessage(),
+                new String[]{}
+        );
     }
 
     public final <T extends Serializable, M extends BotApiMethod<T>> T executeApiMethod(M method) throws TelegramApiException {

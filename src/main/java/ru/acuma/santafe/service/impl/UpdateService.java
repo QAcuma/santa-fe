@@ -14,11 +14,10 @@ public class UpdateService implements IUpdateService {
 
     @Override
     public void handle(Update update) {
-        if (update.getMessage().hasVideoNote()) {
+        if (update.getMessage() != null && update.getMessage().hasVideoNote()) {
             videoNoteService.applyNote(update);
         }
     }
-
 
 
 }

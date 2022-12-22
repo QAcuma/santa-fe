@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.VideoNote;
 
 import java.util.List;
 
-public interface IGiftService {
+public interface IWishService {
     void accept(VideoNote video, User user, String chatId, Integer messageId);
 
     void remindUserWishes(Long telegramId, Long chatId);

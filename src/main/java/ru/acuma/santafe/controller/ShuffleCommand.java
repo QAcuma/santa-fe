@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.acuma.santafe.model.enumerated.PrivateCommand;
-import ru.acuma.santafe.service.impl.ShuffleService;
+import ru.acuma.santafe.service.api.IShuffleService;
 
 import java.util.List;
 
@@ -16,14 +16,14 @@ public class ShuffleCommand extends BaseBotCommand {
 
     private final static List<Long> authorizedMembers = List.of(358831551L, 285250417L);
 
-    private ShuffleService shuffleService;
+    private IShuffleService shuffleService;
 
     public ShuffleCommand() {
         super(PrivateCommand.SHUFFLE.getCommand(), "Shuffle members");
     }
 
     @Autowired
-    public void setWishService(@Lazy ShuffleService shuffleService) {
+    public void setWishService(@Lazy IShuffleService shuffleService) {
         this.shuffleService = shuffleService;
     }
 

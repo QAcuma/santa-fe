@@ -1,25 +1,20 @@
 package ru.acuma.santafe.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.acuma.santafe.model.enumerated.PrivateCommand;
-import ru.acuma.santafe.service.impl.WishService;
+import ru.acuma.santafe.service.api.IWishService;
 
 @Slf4j
 @Component
-public class WishCommand extends BaseBotCommand {
+public class RemindCommand extends BaseBotCommand {
 
-    private WishService wishService;
+    private final IWishService wishService;
 
-    public WishCommand() {
-        super(PrivateCommand.WISH.getCommand(), "Show victim");
-    }
-
-    @Autowired
-    public void setWishService(@Lazy WishService wishService) {
+    public RemindCommand(@Lazy IWishService wishService) {
+        super(PrivateCommand.REMIND.getCommand(), "Show victim");
         this.wishService = wishService;
     }
 

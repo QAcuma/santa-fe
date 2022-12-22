@@ -25,6 +25,7 @@ public class SantaService implements ISantaService {
                 .login(user.getUserName())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
+                .knowVictim(Boolean.FALSE)
                 .build();
 
         santaRepository.save(santa);
@@ -37,7 +38,7 @@ public class SantaService implements ISantaService {
 
     @Override
     public List<Santa> findAllActiveSantas(List<Long> santaIds) {
-        return santaRepository.findAll();
+        return santaRepository.findAllById(santaIds);
     }
 
     @Override

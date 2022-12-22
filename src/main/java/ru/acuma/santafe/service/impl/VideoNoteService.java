@@ -4,15 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
-import ru.acuma.santafe.service.api.IGiftService;
 import ru.acuma.santafe.service.api.ISantaService;
 import ru.acuma.santafe.service.api.IVideoNoteService;
+import ru.acuma.santafe.service.api.IWishService;
 
 @Service
 @RequiredArgsConstructor
 public class VideoNoteService implements IVideoNoteService {
 
-    private final IGiftService giftService;
+    private final IWishService giftService;
     private final ISantaService santaService;
 
     @Override

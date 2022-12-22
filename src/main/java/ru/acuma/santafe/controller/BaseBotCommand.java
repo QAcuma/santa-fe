@@ -8,19 +8,19 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
-import ru.acuma.santafe.service.impl.SantaService;
+import ru.acuma.santafe.service.api.ISantaService;
 
 @Slf4j
 public abstract class BaseBotCommand extends BotCommand {
 
-    private SantaService santaService;
+    private ISantaService santaService;
 
     public BaseBotCommand(String commandIdentifier, String description) {
         super(commandIdentifier, description);
     }
 
     @Autowired
-    public void setSantaService(@Lazy SantaService santaService) {
+    public void setSantaService(@Lazy ISantaService santaService) {
         this.santaService = santaService;
     }
 
