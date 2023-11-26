@@ -17,7 +17,7 @@ import java.util.List;
 @Component
 public class FlushCommand extends BaseBotCommand {
 
-    private final static List<Long> authorizedMembers = List.of(358831551L, 285250417L);
+    private static final List<Long> authorizedMembers = List.of(358831551L, 285250417L);
 
     private final IExecuteService executeService;
     private final IWishService wishService;
