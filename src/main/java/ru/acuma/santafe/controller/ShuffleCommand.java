@@ -45,7 +45,7 @@ public class ShuffleCommand extends BaseBotCommand {
                      🎅 Санты назначены! 🎅
                      Скорее перейди по ссылке и узнай своего счастливчика
                      
-                     @santa_fetch_bot
+                     https://t.me/santa_fetch_bot?start=santa
                      """);
         executeService.execute(response);
     }

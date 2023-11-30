@@ -100,7 +100,7 @@ public class WishService implements IWishService {
 
     @Override
     public List<Long> findWishHolders(String chatId) {
-        return wishRepository.findAll().stream()
+        return wishRepository.findAllByTelegramChatFrom(chatId).stream()
                 .filter(wish -> wish.getStatus() != GiftStatus.RECEIVED)
                 .map(Wish::getTelegramIdFrom)
                 .distinct()
