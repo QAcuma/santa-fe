@@ -13,5 +13,5 @@ public interface WishRepository extends MongoRepository<Wish, Long> {
 
     List<Wish> findAllByTelegramIdFromAndYearEqualsAndStatusIn(Long telegramId, Integer year, List<GiftStatus> statuses);
 
-    List<Wish> findByChatId(String chatId);
+    List<Wish> findAllByTelegramChatFrom(String telegramChatFrom);
 }
