@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
 
-  mongo:
+  santafe-mongo:
     image: mongo:latest
     restart: unless-stopped
     environment:
