@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   mongo:
-    image: mongo:6-jammy
+    image: mongo:latest
     restart: unless-stopped
     environment:
       MONGO_INITDB_USERNAME: santa
