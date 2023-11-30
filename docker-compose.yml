@@ -6,8 +6,8 @@ services:
     image: mongo:latest
     restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: santa
-      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_USERNAME: santa
+      MONGO_INITDB_PASSWORD: root
       MONGO_INITDB_DATABASE: santafe
     ports:
       - 27072:27017
