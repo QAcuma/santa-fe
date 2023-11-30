@@ -19,7 +19,7 @@ public class ShuffleService implements IShuffleService {
 
     @Override
     public void shuffle(String chatId) {
-        var santaIds = wishService.findWishHolders();
+        var santaIds = wishService.findWishHolders(chatId);
         var santas = santaService.findAllActiveSantas(santaIds);
 
         if (santas.isEmpty()) {
@@ -42,5 +42,4 @@ public class ShuffleService implements IShuffleService {
 
         santas.forEach(santa -> log.info("login: {}, {} -> {}", santa.getLogin(), santa.getTelegramId(), santa.getVictimTelegramId()));
     }
-
 }

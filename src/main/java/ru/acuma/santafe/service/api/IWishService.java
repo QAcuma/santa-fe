@@ -13,5 +13,7 @@ public interface IWishService {
 
     List<Long> findWishHolders();
 
+    List<Long> findWishHolders(String chatId);
+
     void flushWishes();
 }

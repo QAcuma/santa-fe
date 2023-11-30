@@ -99,6 +99,15 @@ public class WishService implements IWishService {
     }
 
     @Override
+    public List<Long> findWishHolders(String chatId) {
+        return wishRepository.findByChatId(chatId).stream()
+                .filter(wish -> wish.getStatus() != GiftStatus.RECEIVED)
+                .map(Wish::getTelegramIdFrom)
+                .distinct()
+                .toList();
+    }
+
+    @Override
     public void flushWishes() {
         var wishes = wishRepository.findAll();
         wishes.forEach(wish -> wish.setStatus(GiftStatus.RECEIVED));
