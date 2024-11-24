@@ -22,7 +22,7 @@ public class ShuffleService implements IShuffleService {
         var santaIds = wishService.findWishHolders(chatId);
         var santas = santaService.findAllActiveSantas(santaIds);
 
-        if (santas.isEmpty()) {
+        if (santas.size() < 2) {
             return;
         }
 
