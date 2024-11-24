@@ -7,11 +7,11 @@ telegram:
 spring:
   data:
     mongodb:
-      host: ${SANTAFE_MONGO_HOST:localhost}
-      port: ${SANTAFE_MONGO_PORT:27072}
-      username: ${SANTAFE_MONGO_USER:santa}
-      password: ${SANTAFE_MONGO_PASSWORD:root}
-      database: ${SANTAFE_MONGO_DBNAME:santafe}
+      host: ${SANTAFE_MONGO_HOST}
+      port: ${SANTAFE_MONGO_PORT}
+      username: ${SANTAFE_MONGO_USER}
+      password: ${SANTAFE_MONGO_PASSWORD}
+      database: ${SANTAFE_MONGO_DBNAME}
   main:
     allow-circular-references: true
     web-application-type: none

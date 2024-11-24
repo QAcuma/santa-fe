@@ -1,15 +1,44 @@
 version: '3.7'
 
 services:
+  santafe:
+    container_name: santafe
+    build:
+      dockerfile: Dockerfile
+    environment:
+      SANTAFE_BOT_NAME: ${SANTAFE_BOT_NAME}
+      SANTAFE_BOT_TOKEN: ${SANTAFE_BOT_TOKEN}
+      SANTAFE_MONGO_DBNAME: ${SANTAFE_MONGO_DBNAME}
+      SANTAFE_MONGO_HOST: santafe-mongo
+      SANTAFE_MONGO_PASSWORD: ${SANTAFE_MONGO_PASSWORD}
+      SANTAFE_MONGO_PORT: ${SANTAFE_MONGO_PORT}
+      SANTAFE_MONGO_USER: ${SANTAFE_MONGO_USER}
+    links:
+      - santafe-mongo
+    env_file:
+      - .env
+    networks:
+      - santafe
+    depends_on:
+      - santafe-mongo
 
   santafe-mongo:
+    container_name: santafe-mongo
     image: mongo:latest
     restart: unless-stopped
     environment:
-      MONGO_INITDB_USERNAME: santa
-      MONGO_INITDB_PASSWORD: root
-      MONGO_INITDB_DATABASE: santafe
+      MONGO_INITDB_USERNAME: ${SANTAFE_MONGO_USER}
+      MONGO_INITDB_PASSWORD: ${SANTAFE_MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${SANTAFE_MONGO_DBNAME}
+    env_file:
+      - .env
     ports:
-      - 27072:27017
+      - "27017:27017"
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - santafe
+
+networks:
+  santafe:
+    driver: bridge
