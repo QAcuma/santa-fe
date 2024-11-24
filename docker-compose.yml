@@ -32,6 +32,8 @@ services:
       MONGO_INITDB_DATABASE: ${SANTAFE_MONGO_DBNAME}
     env_file:
       - .env
+    expose:
+      - "27017"
     ports:
       - "27017:27017"
     volumes:
